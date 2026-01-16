@@ -17,3 +17,9 @@ npm run dev
   ➜  Local:   http://localhost:5173/
 ```
 адрес нужно открыть в браузере
+
+## Разворачивание
+
+```shell
+npm run build
+```

@@ -12,8 +12,8 @@ type Question = {
 
 type LoadState = "loading" | "ready" | "error";
 
-const QUESTION_SOURCES = ["/files/questions.json", "/questions.json"];
-const BACKGROUND_SOURCES = ["/files/backgrounds/index.json", "/backgrounds/index.json"];
+const QUESTION_SOURCES = ["./questions.json", "/questions.json"];
+const BACKGROUND_SOURCES = ["./backgrounds/index.json", "/backgrounds/index.json"];
 
 const shuffle = <T,>(items: T[]): T[] => {
   const result = [...items];
@@ -50,7 +50,7 @@ const buildBackgroundUrl = (path: string) => {
   if (path.startsWith("/")) {
     return path;
   }
-  return `/backgrounds/${path}`;
+  return `./backgrounds/${path}`;
 };
 
 const App = () => {
