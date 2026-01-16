@@ -176,6 +176,7 @@ const App = () => {
                   const isCorrect = Boolean(option.right);
                   const showCorrect = answered && isCorrect;
                   const showWrong = answered && isSelected && !isCorrect;
+                  const optionId = `answer-${currentIndex}-${index}`;
 
                   const base =
                     "w-full rounded border px-4 py-3 text-left text-base transition";
@@ -194,15 +195,19 @@ const App = () => {
                   }
 
                   return (
-                    <button
+                    <a
                       key={`${option.text}-${index}`}
-                      type="button"
-                      className={className}
-                      onClick={() => handleOptionClick(index)}
-                      disabled={answered}
+                      href={`#${optionId}`}
+                      className={`${className}${answered ? " pointer-events-none" : ""}`}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        handleOptionClick(index);
+                      }}
+                      aria-disabled={answered}
+                      tabIndex={answered ? -1 : 0}
                     >
                       {option.text}
-                    </button>
+                    </a>
                   );
                 })}
               </div>
