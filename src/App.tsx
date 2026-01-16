@@ -143,6 +143,34 @@ const App = () => {
     }
   }, [answered]);
 
+  useEffect(() => {
+    if (state !== "ready" || !currentQuestion || answered) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      const isEditable =
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable);
+      if (isEditable) {
+        return;
+      }
+
+      if (event.key >= "1" && event.key <= "4") {
+        event.preventDefault();
+        handleOptionClick(Number(event.key) - 1);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [answered, currentQuestion, state]);
+
   return (
     <div className="min-h-screen bg-slate-950 text-far-100">
       <div
