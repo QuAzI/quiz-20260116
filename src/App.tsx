@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type QuestionOption = {
   text: string;
@@ -71,6 +71,7 @@ const App = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -135,6 +136,12 @@ const App = () => {
     setCurrentIndex(0);
     setSelectedIndex(null);
   };
+
+  useEffect(() => {
+    if (answered) {
+      nextButtonRef.current?.focus();
+    }
+  }, [answered]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-far-100">
@@ -215,6 +222,7 @@ const App = () => {
               {answered && (
                 <div className="mt-6 flex justify-end">
                   <button
+                    ref={nextButtonRef}
                     type="button"
                     onClick={handleNext}
                     className="rounded border border-far-400 bg-far-900/70 px-5 py-2 text-sm uppercase tracking-[0.3em] text-far-50 shadow-far transition hover:bg-far-800/80"
