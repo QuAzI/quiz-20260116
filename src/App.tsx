@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type QuestionOption = {
   text: string;
@@ -46,16 +46,6 @@ const normalizeQuestions = (raw: Question[]): Question[] =>
     }))
     .filter((entry) => entry.question && entry.options.length === 4);
 
-const createBackgroundMap = (count: number, backgrounds: string[]): (string | null)[] => {
-  if (backgrounds.length === 0) {
-    return new Array(count).fill(null);
-  }
-  return Array.from({ length: count }, () => {
-    const pick = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-    return pick;
-  });
-};
-
 const buildBackgroundUrl = (path: string) => {
   if (path.startsWith("/")) {
     return path;
@@ -67,10 +57,10 @@ const App = () => {
   const [state, setState] = useState<LoadState>("loading");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [backgrounds, setBackgrounds] = useState<string[]>([]);
-  const [backgroundMap, setBackgroundMap] = useState<(string | null)[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [answerFooterImage, setAnswerFooterImage] = useState<string | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
@@ -84,7 +74,6 @@ const App = () => {
         const shuffled = shuffle(normalized);
         setQuestions(shuffled);
         setBackgrounds(backgroundList);
-        setBackgroundMap(createBackgroundMap(shuffled.length, backgroundList));
         setState(shuffled.length ? "ready" : "error");
         if (!shuffled.length) {
           setErrorMessage("Нет подходящих вопросов в файле.");
@@ -98,43 +87,40 @@ const App = () => {
   }, []);
 
   const currentQuestion = questions[currentIndex];
-  const currentBackground = backgroundMap[currentIndex];
   const total = questions.length;
   const answered = selectedIndex !== null;
   const isFinished = state === "ready" && currentIndex >= total;
-
-  const backgroundStyle = useMemo(() => {
-    if (!currentBackground) {
-      return undefined;
-    }
-    return {
-      backgroundImage: `url("${buildBackgroundUrl(currentBackground)}")`
-    } as const;
-  }, [currentBackground]);
 
   const handleOptionClick = (index: number) => {
     if (answered || !currentQuestion) {
       return;
     }
     setSelectedIndex(index);
+    setAnswerFooterImage(
+      backgrounds.length
+        ? backgrounds[Math.floor(Math.random() * backgrounds.length)]
+        : null
+    );
   };
 
   const handleNext = () => {
     if (currentIndex + 1 >= total) {
       setCurrentIndex(total);
       setSelectedIndex(null);
+      setAnswerFooterImage(null);
       return;
     }
     setCurrentIndex((prev) => prev + 1);
     setSelectedIndex(null);
+    setAnswerFooterImage(null);
   };
 
   const handleRestart = () => {
     const shuffled = shuffle(questions);
     setQuestions(shuffled);
-    setBackgroundMap(createBackgroundMap(shuffled.length, backgrounds));
     setCurrentIndex(0);
     setSelectedIndex(null);
+    setAnswerFooterImage(null);
   };
 
   useEffect(() => {
@@ -173,10 +159,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-far-100">
-      <div
-        className="relative min-h-screen bg-cover bg-center"
-        style={backgroundStyle}
-      >
+      <div className="relative min-h-screen bg-cover bg-center">
         <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-sm" />
         <div className="relative mx-auto flex min-h-screen max-w-4xl flex-col gap-6 px-6 py-10">
           <header className="flex items-center justify-between border border-far-500/60 bg-slate-900/70 px-4 py-3 text-sm uppercase tracking-[0.3em] shadow-far">
@@ -258,6 +241,17 @@ const App = () => {
                     Следующий вопрос
                   </button>
                 </div>
+              )}
+
+              {answered && answerFooterImage && (
+                <footer className="mt-6 border-t border-far-500/30 pt-4">
+                  <img
+                    src={buildBackgroundUrl(answerFooterImage)}
+                    alt="Случайная иллюстрация"
+                    className="h-28 w-full rounded object-cover"
+                    loading="lazy"
+                  />
+                </footer>
               )}
             </main>
           )}
