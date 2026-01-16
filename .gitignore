@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Environment variables
+.env
+.env.*
+
+# Build artifacts
+/build
+/dist
+/coverage
+.next/ # For Next.js projects
+
+# Editor files
+.vscode/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
