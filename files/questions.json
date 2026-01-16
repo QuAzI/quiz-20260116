@@ -9,12 +9,12 @@
     ]
   },
   {
-    "question": "Какая фраза стала культовой благодаря The IT Crowd?",
+    "question": "Какая фраза стала культовой благодаря «Компьютерщикам»?",
     "options": [
-      { "text": "Hello, world" },
-      { "text": "Have you tried turning it off and on again?", "right": true },
-      { "text": "It works on my machine" },
-      { "text": "Access denied" }
+      { "text": "Привет, мир" },
+      { "text": "Вы пробовали выключить и включить снова?", "right": true },
+      { "text": "У меня на машине работает" },
+      { "text": "Доступ запрещён" }
     ]
   },
   {
@@ -92,10 +92,10 @@
   {
     "question": "Как называется сериал про гениев-физиков и гиков?",
     "options": [
-      { "text": "Friends" },
-      { "text": "The Big Bang Theory", "right": true },
-      { "text": "Silicon Valley" },
-      { "text": "Futurama" }
+      { "text": "Друзья" },
+      { "text": "Теория большого взрыва", "right": true },
+      { "text": "Кремниевая долина" },
+      { "text": "Футурама" }
     ]
   },
   {
@@ -153,7 +153,7 @@
     ]
   },
   {
-    "question": "Как назывались правила поведения в эхах?",
+    "question": "Как назывались правила поведения в ФИДО и раннем Интернет?",
     "options": [
       { "text": "FAQ" },
       { "text": "Charter" },
