@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Fira Code", Consolas, ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #0a0f13;
+}
+
+button:focus-visible {
+  outline: 2px dashed #00e274;
+  outline-offset: 2px;
+}
