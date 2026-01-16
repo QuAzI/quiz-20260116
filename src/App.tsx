@@ -180,7 +180,8 @@ const App = () => {
           )}
 
           {state === "ready" && !isFinished && currentQuestion && (
-            <main className="rounded border border-far-500/60 bg-slate-900/70 p-6 shadow-far">
+            <>
+              <main className="rounded border border-far-500/60 bg-slate-900/70 p-6 shadow-far">
               <div className="flex flex-wrap items-center justify-end gap-3 text-sm uppercase tracking-[0.2em] text-far-200">
                 <span>{answered ? "ОТВЕТ ПРИНЯТ" : ""}</span>
               </div>
@@ -243,17 +244,19 @@ const App = () => {
                 </div>
               )}
 
+              </main>
+
               {answered && answerFooterImage && (
-                <footer className="mt-6 border-t border-far-500/30 pt-4">
+                <div className="rounded border border-far-500/60 bg-slate-900/70 p-6 shadow-far">
                   <img
                     src={buildBackgroundUrl(answerFooterImage)}
                     alt="Случайная иллюстрация"
-                    className="h-28 w-full rounded object-cover"
+                    className="h-72 w-full rounded object-cover"
                     loading="lazy"
                   />
-                </footer>
+                </div>
               )}
-            </main>
+            </>
           )}
 
           {state === "ready" && isFinished && (
