@@ -145,8 +145,8 @@ const App = () => {
         <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-sm" />
         <div className="relative mx-auto flex min-h-screen max-w-4xl flex-col gap-6 px-6 py-10">
           <header className="flex items-center justify-between border border-far-500/60 bg-slate-900/70 px-4 py-3 text-sm uppercase tracking-[0.3em] shadow-far">
-            <span>FAR QUIZ</span>
-            <span>СЕССИЯ: {total || "—"}</span>
+            <span>ВОПРОС {currentIndex + 1}</span>
+            <span>ИЗ {total || "—"}</span>
           </header>
 
           {state === "loading" && (
@@ -163,9 +163,8 @@ const App = () => {
 
           {state === "ready" && !isFinished && currentQuestion && (
             <main className="rounded border border-far-500/60 bg-slate-900/70 p-6 shadow-far">
-              <div className="flex flex-wrap items-center justify-between gap-3 text-sm uppercase tracking-[0.2em] text-far-200">
-                <span>Вопрос {currentIndex + 1} / {total}</span>
-                <span>{answered ? "ОТВЕТ ПРИНЯТ" : "ВЫБЕРИТЕ ВАРИАНТ"}</span>
+              <div className="flex flex-wrap items-center justify-end gap-3 text-sm uppercase tracking-[0.2em] text-far-200">
+                <span>{answered ? "ОТВЕТ ПРИНЯТ" : ""}</span>
               </div>
               <h1 className="mt-5 text-2xl font-semibold text-far-50">
                 {currentQuestion.question}
@@ -240,9 +239,6 @@ const App = () => {
             </main>
           )}
 
-          <footer className="text-center text-xs uppercase tracking-[0.35em] text-far-300">
-            FAR STYLE UI · QUESTIONS FROM FILES
-          </footer>
         </div>
       </div>
     </div>
